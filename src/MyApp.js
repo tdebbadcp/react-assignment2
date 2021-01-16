@@ -8,6 +8,8 @@ function MyApp() {
 
    function removeOneCharacter (index) {
       const updated = characters.filter((character, i) => {
+         if (i === index)
+            makeDeleteCall(characters[index].id)
          return i !== index
       });
       setCharacters(updated);
@@ -42,6 +44,17 @@ function MyApp() {
    async function makePostCall(person){
       try {
          const response = await axios.post('http://localhost:5000/users', person);
+         return response;
+      }
+      catch (error) {
+         console.log(error);
+         return false;
+      }
+   }
+
+   async function makeDeleteCall(id){
+      try {
+         const response = await axios.delete('http://localhost:5000/users/' + id);
          return response;
       }
       catch (error) {
